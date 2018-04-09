@@ -15,6 +15,7 @@ def strcpy(stream):
         eof = stream.read(1)
     return ''.join(szName).replace(' ', '_')  # Convert to string without spaces.
 
+# define some enums to be used later on
 NAT_PING  					= 0
 NAT_PINGRESPONSE			= 1
 NAT_REQUEST					= 2
@@ -69,6 +70,7 @@ class NatSocket(object):
         assert isinstance(max_packet_size/4, int), "max_packet_size must be divisible by 4"
         self.max_packet_size = max_packet_size
 
+# the command socket is used to send commands to motive (NatNet server)
 class NatCommSocket(NatSocket):
 
     def __init__(self, client_ip=CLIENT_ADDRESS, uPort=PORT_COMMAND,
@@ -100,9 +102,9 @@ class NatCommSocket(NatSocket):
         Send an integer command to NatNet Server, usually as a request for some packet type on the command socket.
 
         .. note:: Values Available, along with value to expect in NatPacket.iMessage when receiving the response:
-          - 0 = NAT_PING
-          - 1 = NAT_PINGRESPONSE
-          - 2 = NAT_REQUEST  (must also send a message string.)
+          0 = NAT_PING
+          1 = NAT_PINGRESPONSE
+          2 = NAT_REQUEST  (must also send a message string.)
           3 = NAT_RESPONSE
           4 = NAT_REQUEST_MODELDEF		
           5 = NAT_MODELDEF
@@ -226,7 +228,7 @@ class NatClient(object):
 
     @property
     def is_recording(self):
-        return self._is_recording
+        return self._is_recordings
 
     @is_recording.setter
     def is_recording(self, bool_value):
